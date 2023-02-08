@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("/api/personne")
 @RequiredArgsConstructor
 public class PersonneController {
-
     @Autowired
     private IPersonneService iPersonneService;
 
@@ -25,32 +24,27 @@ public class PersonneController {
 
     @PostMapping("/save")
     public Personne enregistrerPersone(@RequestBody PersonneModel personneModel){
-
         return iPersonneService.enregistrerPersonne(personneModel);
-
-
     }
+
     @GetMapping("/liste")
     List<Personne> listePersone(){
         return iPersonneService.listePersone();
     }
+
     @PostMapping("/update")
     public Personne updatePersone(@RequestBody PersonneModel personneModel){
-        Personne p = iPersonneService.rechercherParId(personneModel.getId());
-        Departement dep = iDepartementService.rechercherDepartementParId(personneModel.getDepartementId());
-        p.setNom(personneModel.getNom());
-        p.setPrenom(personneModel.getPrenom());
-        p.setAge(personneModel.getAge());
-        p.setDepartement(dep);
-        return iPersonneService.updatePersonne(p);
-    }
 
+        return iPersonneService.updatePersonne(personneModel);
+    }
+    @PostMapping("/completeUpdate")
+    public Personne completeUpdatePersone(@RequestBody Personne personne){
+
+        return iPersonneService.completeUpdate(personne);
+    }
     @PostMapping("/delete")
     public void supprimerPersone(@RequestBody Personne personne){
          iPersonneService.supprimerPersonne(personne);
     }
-
-
-
 
 }

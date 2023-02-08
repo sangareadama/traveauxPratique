@@ -9,8 +9,9 @@ import java.util.List;
 public interface IPersonneService{
     public Personne enregistrerPersonne(PersonneModel personneModel);
     public List<Personne> listePersone();
-    public Personne updatePersonne(Personne personne);
+    public Personne updatePersonne(PersonneModel personneModel);
     public  void supprimerPersonne(Personne personne);
 
+    public Personne completeUpdate(Personne personne);
     public Personne rechercherParId(Long id);
 }

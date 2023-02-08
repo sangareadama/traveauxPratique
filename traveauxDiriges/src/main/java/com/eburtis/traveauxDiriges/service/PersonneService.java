@@ -26,9 +26,9 @@ public class PersonneService implements IPersonneService{
         Personne pers=new Personne(personneModel.getNom(),personneModel.getPrenom(),personneModel.getAge(),dep);
 
         if (personneModel.getAge()>=18){
-            pers.setStatus("Majeur");
+            pers.ajoutStatus("Majeur");
         }else {
-            pers.setStatus("Mineur");
+            pers.ajoutStatus("Mineur");
         }
 
         return personneRepository.save(pers);
@@ -40,14 +40,29 @@ public class PersonneService implements IPersonneService{
     }
 
     @Override
-    public Personne updatePersonne(Personne personne) {
+    public Personne updatePersonne(PersonneModel personneModel) {
 
-        return personneRepository.save(personne);
+        Personne personneToUpdate = rechercherParId(personneModel.getId());
+        Departement dep = iDepartementService.rechercherDepartementParId(personneModel.getDepartementId());
+        personneToUpdate.mettreAjour(personneModel);
+        if (personneModel.getAge() >= 18) {
+            personneToUpdate.ajoutStatus("Majeur");
+        } else {
+            personneToUpdate.ajoutStatus("Mineur");
+        }
+        personneToUpdate.setDepartement(dep);
+
+        return personneRepository.save(personneToUpdate);
     }
 
     @Override
     public void supprimerPersonne(Personne personne) {
         personneRepository.deleteById(personne.getId());
+    }
+
+    @Override
+    public Personne completeUpdate(Personne personne) {
+        return personneRepository.save(personne);
     }
 
     @Override

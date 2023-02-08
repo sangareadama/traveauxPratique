@@ -6,7 +6,10 @@ public class PersonneModel {
     private String prenom;
     private int age;
     private Long departementId;
-
+    private String status;
+    public String getStatus() {
+        return status;
+    }
 
     public PersonneModel(String nom, String prenom, int age, Long departementId) {
         this.nom = nom;
